@@ -20,20 +20,21 @@ func main() {
 		var email string
 		var bookedTickets uint
 		var bookings = []string{}
-		for remainingTickets > 0 {
-			fmt.Println("Enter your first name")
-			fmt.Scan(&firstName)
 
-			fmt.Println("Enter your last name")
-			fmt.Scan(&lastName)
+		fmt.Println("Enter your first name")
+		fmt.Scan(&firstName)
 
-			fmt.Println("Enter your email")
-			fmt.Scan(&email)
+		fmt.Println("Enter your last name")
+		fmt.Scan(&lastName)
 
-			fmt.Println("How many tickets are you booking?")
-			fmt.Scan(&bookedTickets)
+		fmt.Println("Enter your email")
+		fmt.Scan(&email)
 
-			remainingTickets = conferenceTickets - int(bookedTickets)
+		fmt.Println("How many tickets are you booking?")
+		fmt.Scan(&bookedTickets)
+
+		if bookedTickets <= uint(remainingTickets) {
+			remainingTickets = remainingTickets - int(bookedTickets)
 			bookings = append(bookings, firstName+" "+lastName)
 
 			fmt.Printf("Thank you %v %v,you booked %v tickets. You will receive a confirmation email at %v \n",
@@ -48,15 +49,13 @@ func main() {
 			}
 			fmt.Printf("The first names of the bookings are: %v\n", firstNames)
 
-			if bookedTickets > uint(remainingTickets) {
-				fmt.Printf("We have %v tickets left.", remainingTickets)
-				continue
-			}
-
 			if remainingTickets == 0 {
 				fmt.Println("The tickets are sold out!")
 				break
 			}
+		} else {
+			fmt.Printf("We only have %v tickets left.", remainingTickets)
+
 		}
 	}
 
