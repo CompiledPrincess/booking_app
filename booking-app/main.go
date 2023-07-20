@@ -1,8 +1,8 @@
 package main
 
 import (
-	"booking-app/helper"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -18,7 +18,7 @@ func main() {
 
 	for {
 		firstName, lastName, email, bookedTickets := getUserInput()
-		isNameValid, isEmailValid, isBookedTicketsValid := helper.ValidateUserInput(firstName, lastName, email, bookedTickets, remainingTickets)
+		isNameValid, isEmailValid, isBookedTicketsValid := validateUserInput(firstName, lastName, email, bookedTickets)
 
 		if isNameValid && isEmailValid && isBookedTicketsValid {
 			bookTickets(bookedTickets, firstName, lastName, email)
@@ -86,6 +86,12 @@ func getUserInput() (string, string, string, uint) {
 func bookTickets(bookedTickets uint, firstName string, lastName string, email string) {
 	remainingTickets = remainingTickets - bookedTickets
 	bookings = append(bookings, firstName+" "+lastName)
+
+	var userData = make(map[string]string)
+	userData["firstName"] = firstName
+	userData["lastName"] = lastName
+	userData["email"] = email
+	userData["bookedTickets"] = strconv.FormatUint(uint64(bookedTickets), 10)
 
 	fmt.Printf("Thank you %v %v,you booked %v tickets. You will receive a confirmation email at %v \n", firstName, lastName, bookedTickets, email)
 	fmt.Printf("The remaining tickets' total is %v \n", remainingTickets)
